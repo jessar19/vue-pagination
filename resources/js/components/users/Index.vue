@@ -8,7 +8,10 @@
                 <div class="card-body">
                     
                     <user v-for="user in users" :user="user" :key="user.id"> </user>
-   
+                    
+                    <pagination :meta="meta"> </pagination>
+               
+
                 </div>
             </div>
         </div>
@@ -20,20 +23,23 @@
 
 <script>
 
-     import User from './partials/User.vue'
+    import User from './partials/User.vue'
+    import Pagination from '../pagination/Pagination.vue'
 
 
 export default {
     
     components: { 
 
-    User
+    User,
+    Pagination
     
     },
   
     data () {
         return {
-            users: []
+            users: [],
+            meta: {}
         }
     },
 
@@ -41,6 +47,7 @@ export default {
       
       axios.get('/api/users').then ((response)=> {
           this.users = response.data.data;
+          this.meta  = response.data.meta;
       })
 
     },

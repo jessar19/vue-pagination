@@ -9,7 +9,7 @@
                     
                     <user v-for="user in users" :user="user" :key="user.id"> </user>
                     
-                    <pagination :meta="meta"> </pagination>
+                    <pagination :meta="meta" v-on:pagination:switched="getUsers"> </pagination>
                
 
                 </div>
@@ -24,6 +24,7 @@
 <script>
 
     import User from './partials/User.vue'
+    
     import Pagination from '../pagination/Pagination.vue'
 
 
@@ -32,24 +33,48 @@ export default {
     components: { 
 
     User,
+
     Pagination
     
     },
   
     data () {
+
         return {
             users: [],
+
             meta: {}
         }
     },
 
-    mounted() {
-      
-      axios.get('/api/users').then ((response)=> {
-          this.users = response.data.data;
-          this.meta  = response.data.meta;
-      })
+    methods: {
 
+        getUsers (page = 1) {
+
+            axios.get('/api/users', {
+
+                params: {
+
+                    page
+
+                }
+
+            }).then ((response)=> {
+
+                this.users = response.data.data;
+
+                this.meta  = response.data.meta;
+            })
+        },
     },
+
+    mounted() {
+
+        this.getUsers()
+      
+   }
+
+
 }
+
 </script>

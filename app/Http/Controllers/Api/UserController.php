@@ -12,6 +12,6 @@ class UserController extends Controller
     public function index()
     {
         return new UsersCollection(User::paginate(10));
-
+    
     }
 }

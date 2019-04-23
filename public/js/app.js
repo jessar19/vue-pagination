@@ -1778,7 +1778,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -1829,21 +1828,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['meta'],
+  props: ["meta"],
+  data: function data() {
+    return {
+      numbersPerSection: 7
+    };
+  },
+  computed: {
+    section: function section() {
+      return Math.ceil(this.meta.current_page / this.numbersPerSection);
+    },
+    sections: function sections() {
+      return Math.ceil(this.meta.last_page / this.numbersPerSection);
+    },
+    pages: function pages() {
+      return _.range(1, 101);
+    }
+  },
   methods: {
     switched: function switched(page) {
       if (page <= 0 || page > this.meta.last_page) {
         return;
       }
 
-      this.$emit('pagination:switched', page);
+      this.$emit("pagination:switched", page);
     }
   }
 });
@@ -1861,15 +1870,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _partials_User_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./partials/User.vue */ "./resources/js/components/users/partials/User.vue");
 /* harmony import */ var _pagination_Pagination_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pagination/Pagination.vue */ "./resources/js/components/pagination/Pagination.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -1902,7 +1902,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios.get('/api/users', {
+      axios.get("/api/users", {
         params: {
           page: page
         }
@@ -1947,18 +1947,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user']
+  props: ["user"]
 });
 
 /***/ }),
@@ -37944,10 +37934,10 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("nav", { attrs: { "aria-label": "Page navigation" } }, [
+  return _c("nav", [
     _c(
       "ul",
-      { staticClass: "pagination" },
+      { staticClass: "pagination flex-wrap" },
       [
         _c(
           "li",
@@ -37977,7 +37967,7 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _vm._l(_vm.meta.last_page, function(page) {
+        _vm._l(_vm.pages, function(page) {
           return _c(
             "li",
             {
@@ -38032,7 +38022,11 @@ var render = function() {
         )
       ],
       2
-    )
+    ),
+    _vm._v(" "),
+    _c("p", [_vm._v("sections: " + _vm._s(_vm.sections))]),
+    _vm._v(" "),
+    _c("p", [_vm._v("section: " + _vm._s(_vm.section))])
   ])
 }
 var staticRenderFns = []
@@ -38117,9 +38111,9 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "media-body m-left" }, [
       _c("h5", { staticClass: "media-heading" }, [
-        _vm._v("\n\n            " + _vm._s(_vm.user.name) + "\n\n        ")
+        _vm._v(_vm._s(_vm.user.name))
       ]),
-      _vm._v("\n\n        " + _vm._s(_vm.user.email) + "\n\n    ")
+      _vm._v("\n    \n    " + _vm._s(_vm.user.email) + "\n\n  ")
     ])
   ])
 }

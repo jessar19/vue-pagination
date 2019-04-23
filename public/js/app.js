@@ -1840,6 +1840,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["meta"],
   data: function data() {
@@ -1874,6 +1882,15 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.$emit("pagination:switched", page);
+    },
+    goBackAsection: function goBackAsection() {
+      this.switched(this.firstPageOfSection(this.section - 1));
+    },
+    goForwardAsection: function goForwardAsection() {
+      this.switched(this.firstPageOfSection(this.section + 1));
+    },
+    firstPageOfSection: function firstPageOfSection(section) {
+      return (section - 1) * this.numbersPerSection + 1;
     }
   }
 });
@@ -38005,6 +38022,23 @@ var render = function() {
                   },
                   [_vm._v("1")]
                 )
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "page-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.goBackAsection($event)
+                      }
+                    }
+                  },
+                  [_vm._v("...")]
+                )
               ])
             ]
           : _vm._e(),
@@ -38037,6 +38071,23 @@ var render = function() {
         _vm._v(" "),
         _vm.section < _vm.sections
           ? [
+              _c("li", { staticClass: "page-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "page-link",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.goForwardAsection($event)
+                      }
+                    }
+                  },
+                  [_vm._v("...")]
+                )
+              ]),
+              _vm._v(" "),
               _c("li", { staticClass: "page-item" }, [
                 _c(
                   "a",

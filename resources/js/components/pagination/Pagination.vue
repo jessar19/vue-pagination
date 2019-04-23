@@ -13,6 +13,10 @@
           <li class="page-item">
               <a class="page-link" href="#" @click.prevent="switched(page)" >1</a>
           </li>
+           <li class="page-item">
+              <a class="page-link" href="#" @click.prevent="goBackAsection">...</a>
+          </li>
+
       </template>
       <li
         class="page-item"
@@ -21,13 +25,17 @@
       >
         <a class="page-link" href="#" @click.prevent="switched(page)">{{ page }}</a>
       </li>
-      <!-- show [link] for return to page number 1 -->
+      <!-- show [link] for return to last page -->
       <template v-if="section < sections">
+           <li class="page-item">
+              <a class="page-link" href="#" @click.prevent="goForwardAsection">...</a>
+          </li>
+
           <li class="page-item">
               <a class="page-link" href="#" @click.prevent="switched(meta.last_page)">{{ meta.last_page }}</a>
           </li>
+         
       </template>
-
 
       <li class="page-item" :class="{ 'disabled' :  meta.current_page === meta.last_page }">
         <a class="page-link" href="#" @click.prevent="switched(meta.current_page + 1)">
@@ -81,6 +89,23 @@
                 return;
             }
             this.$emit("pagination:switched", page);
+        },
+        goBackAsection () {
+            this.switched(
+                this.firstPageOfSection(this.section - 1)
+            )
+
+        },
+
+        goForwardAsection () {
+             this.switched(
+                this.firstPageOfSection(this.section + 1)
+            )
+
+        },
+        
+        firstPageOfSection (section) {
+            return (section - 1) * this.numbersPerSection + 1
         }
     }
 };

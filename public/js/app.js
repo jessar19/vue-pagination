@@ -1842,8 +1842,17 @@ __webpack_require__.r(__webpack_exports__);
     sections: function sections() {
       return Math.ceil(this.meta.last_page / this.numbersPerSection);
     },
+    lastPage: function lastPage() {
+      var lastPage = (this.section - 1) * this.numbersPerSection + this.numbersPerSection;
+
+      if (this.section === this.sections) {
+        lastPage = this.meta.last_page;
+      }
+
+      return lastPage;
+    },
     pages: function pages() {
-      return _.range(1, 101);
+      return _.range((this.section - 1) * this.numbersPerSection + 1, this.lastPage + 1);
     }
   },
   methods: {

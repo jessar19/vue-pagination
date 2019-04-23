@@ -7,8 +7,13 @@
 
           <span class="sr-only">Previous</span>
         </a>
-      </li>
-
+      </li class="page-item">
+      <!-- show [link] for return to page number 1 -->
+      <template v-if="section > 1">
+          <li class="page-item">
+              <a class="page-link" href="#" @click.prevent="switched(page)" >1</a>
+          </li>
+      </template>
       <li
         class="page-item"
         v-for="page in pages"
@@ -16,6 +21,13 @@
       >
         <a class="page-link" href="#" @click.prevent="switched(page)">{{ page }}</a>
       </li>
+      <!-- show [link] for return to page number 1 -->
+      <template v-if="section < sections">
+          <li class="page-item">
+              <a class="page-link" href="#" @click.prevent="switched(meta.last_page)">{{ meta.last_page }}</a>
+          </li>
+      </template>
+
 
       <li class="page-item" :class="{ 'disabled' :  meta.current_page === meta.last_page }">
         <a class="page-link" href="#" @click.prevent="switched(meta.current_page + 1)">
